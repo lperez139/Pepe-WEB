@@ -29,10 +29,12 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 9rem;
 }
 
 body {
   min-height: 100vh;
+  overflow-x: clip;
   background:
     radial-gradient(1400px 700px at 20% -10%, rgba(29, 78, 216, 0.2), transparent 65%),
     radial-gradient(1200px 680px at 110% 10%, rgba(34, 211, 238, 0.12), transparent 66%),
@@ -40,6 +42,10 @@ body {
   color: var(--text-main);
   font-family: var(--font-manrope), sans-serif;
   text-rendering: optimizeLegibility;
+}
+
+section[id] {
+  scroll-margin-top: 9rem;
 }
 
 .section-spacing {

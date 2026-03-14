@@ -1,66 +1,86 @@
-﻿import { ButtonLink } from "@/components/ui/button-link";
+import Image from "next/image";
+import portadaImage from "@/assets/portada.jpg";
+import { HeroLogo } from "@/components/site/hero-logo";
+import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { compatiblePlatforms, trustPillars } from "@/lib/site-content";
-import { HeroLogo } from "@/components/site/hero-logo";
 
 export function Hero() {
   return (
-    <section id="inicio" className="relative overflow-hidden pt-36 pb-20 md:pt-44 md:pb-28">
-      <div className="hero-grid absolute inset-0 -z-20" aria-hidden />
-      <div className="hero-glow absolute inset-x-0 top-0 -z-10 h-[640px]" aria-hidden />
-      <Container>
-        <Reveal className="mb-8">
-          <HeroLogo />
-        </Reveal>
-        <Reveal>
-          <p className="mb-6 inline-flex rounded-full border border-[color:var(--border)] bg-[color:rgba(255,255,255,0.02)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent-glow)]">
-            Integrador tecnológico B2B
-          </p>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <h1 className="max-w-5xl text-balance font-heading text-4xl font-semibold leading-[1.08] text-[color:var(--text-main)] md:text-6xl">
-            Integración tecnológica, videovigilancia y control de acceso para empresas e infraestructura crítica
-          </h1>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="mt-7 max-w-4xl text-pretty text-base leading-relaxed text-[color:var(--text-secondary)] md:text-xl">
-            Diseñamos, implementamos y mantenemos soluciones de CCTV, control de acceso, redes, cartelería digital y
-            monitoreo centralizado para entornos corporativos, industriales e institucionales.
-          </p>
-        </Reveal>
-        <Reveal delay={0.15}>
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-            <ButtonLink href="#contacto">Solicitar cotización</ButtonLink>
-            <ButtonLink href="#servicios" variant="secondary">
-              Ver servicios
-            </ButtonLink>
-          </div>
-        </Reveal>
+    <section id="inicio" className="relative overflow-hidden pb-18 pt-32 md:min-h-[92svh] md:pb-24 md:pt-36">
+      <div className="absolute inset-0 -z-30">
+        <Image
+          src={portadaImage}
+          alt="Portada tecnológica de monitoreo global y sistemas conectados"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+      </div>
+      <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(6,10,16,0.94)_0%,rgba(6,10,16,0.86)_35%,rgba(6,10,16,0.52)_62%,rgba(6,10,16,0.78)_100%)]" />
+      <div className="hero-grid absolute inset-0 -z-10 opacity-20" aria-hidden />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-52 bg-[linear-gradient(180deg,rgba(10,15,20,0)_0%,rgba(10,15,20,0.95)_100%)]" />
 
-        <Reveal delay={0.2} className="mt-12">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {trustPillars.map((pillar) => (
-              <div
-                key={pillar}
-                className="rounded-2xl border border-[color:var(--border)] bg-[color:rgba(16,23,34,0.6)] px-4 py-3 text-sm text-[color:var(--text-main)] backdrop-blur-sm"
-              >
-                {pillar}
+      <Container className="relative z-10">
+        <div className="grid gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(300px,0.7fr)] xl:items-end">
+          <div className="max-w-4xl">
+            <Reveal className="mb-8">
+              <HeroLogo />
+            </Reveal>
+            <Reveal>
+              <p className="mb-6 inline-flex rounded-full border border-[color:rgba(34,211,238,0.18)] bg-[color:rgba(7,13,20,0.55)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent-glow)] backdrop-blur-sm">
+                Integrador tecnológico B2B
+              </p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h1 className="max-w-5xl text-balance font-heading text-4xl font-semibold leading-[1.04] text-[color:var(--text-main)] md:text-6xl xl:text-[4.5rem]">
+                Integración tecnológica, videovigilancia y control de acceso para empresas e infraestructura crítica
+              </h1>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-7 max-w-3xl text-pretty text-base leading-relaxed text-[color:rgba(243,247,251,0.78)] md:text-xl">
+                Diseñamos, implementamos y mantenemos soluciones de CCTV, control de acceso, redes, cartelería digital
+                y monitoreo centralizado para entornos corporativos, industriales e institucionales.
+              </p>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <div className="mt-10 flex flex-wrap items-center gap-3">
+                <ButtonLink href="#contacto">Solicitar cotización</ButtonLink>
+                <ButtonLink href="#servicios" variant="secondary">
+                  Ver servicios
+                </ButtonLink>
               </div>
-            ))}
+            </Reveal>
           </div>
-        </Reveal>
 
-        <Reveal delay={0.25} className="mt-10">
-          <div className="rounded-2xl border border-[color:var(--border)] bg-[color:rgba(16,23,34,0.5)] p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--text-secondary)]">
+          <Reveal delay={0.2} className="xl:justify-self-end">
+            <div className="rounded-[2rem] border border-[color:rgba(255,255,255,0.08)] bg-[linear-gradient(180deg,rgba(10,15,20,0.52)_0%,rgba(10,15,20,0.78)_100%)] p-5 backdrop-blur-sm">
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+                {trustPillars.map((pillar) => (
+                  <div
+                    key={pillar}
+                    className="rounded-2xl border border-[color:rgba(255,255,255,0.08)] bg-[color:rgba(16,23,34,0.54)] px-4 py-3 text-sm text-[color:var(--text-main)]"
+                  >
+                    {pillar}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.25} className="mt-12 md:mt-16">
+          <div className="rounded-3xl border border-[color:rgba(255,255,255,0.08)] bg-[color:rgba(10,15,20,0.52)] p-5 backdrop-blur-md">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:rgba(243,247,251,0.66)]">
               Plataformas compatibles
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {compatiblePlatforms.map((platform) => (
                 <span
                   key={platform}
-                  className="rounded-full border border-[color:var(--border)] bg-[color:rgba(255,255,255,0.02)] px-3 py-1.5 text-xs text-[color:var(--text-secondary)]"
+                  className="rounded-full border border-[color:rgba(255,255,255,0.08)] bg-[color:rgba(255,255,255,0.03)] px-3 py-1.5 text-xs text-[color:var(--text-secondary)]"
                 >
                   {platform}
                 </span>
@@ -72,4 +92,3 @@ export function Hero() {
     </section>
   );
 }
-

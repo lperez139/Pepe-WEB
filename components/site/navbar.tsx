@@ -1,7 +1,6 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { navLinks } from "@/lib/site-content";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -9,6 +8,14 @@ import { Brand } from "@/components/ui/brand";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+
+  const scrollToSection = (href: string) => {
+    const id = href.replace("#", "");
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", href);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -34,27 +41,41 @@ export function Navbar() {
           />
           <div className="hidden items-center gap-3 xl:flex">
             <ButtonLink href="#contacto" variant="secondary">
-              Agendar visita técnica
+              Agendar visita tecnica
             </ButtonLink>
-            <ButtonLink href="#contacto">Solicitar cotización</ButtonLink>
+            <ButtonLink href="#contacto">Solicitar cotizacion</ButtonLink>
           </div>
           <ButtonLink href="#contacto" className="xl:hidden">
             Cotizar
           </ButtonLink>
         </div>
-        <nav aria-label="Navegación principal" className="mt-3 overflow-x-auto pb-1 [scrollbar-width:none]">
+        <nav aria-label="Navegacion principal" className="mt-3 overflow-x-auto pb-1 [scrollbar-width:none]">
           <ul className="flex min-w-max items-center gap-5 text-sm text-[color:var(--text-secondary)]">
             {navLinks.map((item) => (
               <li key={item.href}>
-                <Link className="transition-colors hover:text-[color:var(--text-main)]" href={item.href}>
+                <a
+                  className="transition-colors hover:text-[color:var(--text-main)]"
+                  href={item.href}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToSection(item.href);
+                  }}
+                >
                   {item.label}
-                </Link>
+                </a>
               </li>
             ))}
             <li className="xl:hidden">
-              <Link className="text-[color:var(--accent-glow)] transition-colors hover:text-[color:var(--text-main)]" href="#contacto">
-                Agendar visita técnica
-              </Link>
+              <a
+                className="text-[color:var(--accent-glow)] transition-colors hover:text-[color:var(--text-main)]"
+                href="#contacto"
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToSection("#contacto");
+                }}
+              >
+                Agendar visita tecnica
+              </a>
             </li>
           </ul>
         </nav>
@@ -62,4 +83,3 @@ export function Navbar() {
     </header>
   );
 }
-

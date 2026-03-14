@@ -3,13 +3,13 @@ import { ContactSection } from "@/components/site/contact-section";
 import { DifferentiatorsSection } from "@/components/site/differentiators-section";
 import { FaqSection } from "@/components/site/faq-section";
 import { Footer } from "@/components/site/footer";
+import { GlobalBackgroundFollower } from "@/components/site/global-background-follower";
 import { Hero } from "@/components/site/hero";
 import { IndustriesSection } from "@/components/site/industries-section";
 import { IntegrationSection } from "@/components/site/integration-section";
 import { LiveSystemsDashboard } from "@/components/site/live-systems-dashboard";
 import { Navbar } from "@/components/site/navbar";
 import { ProcessSection } from "@/components/site/process-section";
-import { ProjectsSection } from "@/components/site/projects-section";
 import { ServicesSection } from "@/components/site/services-section";
 import { ValueProposition } from "@/components/site/value-proposition";
 import { company, faqs, services } from "@/lib/site-content";
@@ -98,21 +98,23 @@ export default function Home() {
         Saltar al contenido
       </a>
       <Navbar />
-      <main id="contenido">
+      <GlobalBackgroundFollower />
+      <main id="contenido" className="relative z-10">
         <Hero />
         <LiveSystemsDashboard />
         <ValueProposition />
         <ServicesSection />
         <IndustriesSection />
         <IntegrationSection />
-        <ProjectsSection />
         <ProcessSection />
         <DifferentiatorsSection />
         <AboutSection />
         <FaqSection />
         <ContactSection />
       </main>
-      <Footer />
+      <div className="relative z-10">
+        <Footer />
+      </div>
 
       <script
         type="application/ld+json"

@@ -30,7 +30,6 @@ export const navLinks: NavLink[] = [
   { href: "#servicios", label: "Servicios" },
   { href: "#industrias", label: "Industrias" },
   { href: "#integracion", label: "Integración" },
-  { href: "#proyectos", label: "Proyectos" },
   { href: "#nosotros", label: "Nosotros" },
   { href: "#faq", label: "FAQ" },
   { href: "#contacto", label: "Contacto" },
@@ -162,7 +161,12 @@ export const services: ServiceItem[] = [
       "Diseño de autonomía energética",
       "Plan de continuidad",
     ],
-    applications: ["Data rooms y salas de control", "Sistemas de videovigilancia", "Redes de acceso crítico", "Operaciones continuas"],
+    applications: [
+      "Data rooms y salas de control",
+      "Sistemas de videovigilancia",
+      "Redes de acceso crítico",
+      "Operaciones continuas",
+    ],
   },
   {
     id: "consultoria",
@@ -233,24 +237,6 @@ export const differentiators = [
   "Documentación técnica y trazabilidad de punta a punta",
 ];
 
-export const projectHighlights = [
-  {
-    title: "Modernización de CCTV y control de acceso en corporativo multisede",
-    result: "Centralización de 6 sedes, reducción de tiempos de respuesta y mayor trazabilidad de accesos.",
-    scope: ["CCTV IP", "Control biométrico", "Integración VMS"],
-  },
-  {
-    title: "Sala de control para operación industrial 24/7",
-    result: "Monitoreo unificado con respaldo energético y visibilidad continua de eventos críticos.",
-    scope: ["Video wall", "UPS online", "Correlación de alertas"],
-  },
-  {
-    title: "Digital signage gestionado para red de centros médicos",
-    result: "Comunicación centralizada con actualización remota y reportes de disponibilidad.",
-    scope: ["CMS", "Players", "Soporte gestionado"],
-  },
-];
-
 export const faqs: FaqItem[] = [
   {
     question: "¿Qué incluye un sistema de videovigilancia para empresas?",
@@ -302,14 +288,4 @@ export const faqs: FaqItem[] = [
     answer:
       "Sí. Se diseñan arquitecturas estandarizadas y escalables para múltiples sucursales, integrando gestión central, políticas unificadas y soporte por niveles.",
   },
-];
-
-export const integrationNodes = [
-  "CCTV",
-  "Control de acceso",
-  "Alarmas",
-  "Red y telecom",
-  "Monitoreo central",
-  "Respaldo energético",
-  "Cartelería digital",
 ];

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
@@ -14,28 +14,28 @@ type SystemMetric = {
 };
 
 const baseMetrics: SystemMetric[] = [
-  { id: "cctv", label: "Cámaras CCTV activas", value: 482, unit: "cámaras", status: "Operativo" },
+  { id: "cctv", label: "Camaras CCTV activas", value: 482, unit: "camaras", status: "Operativo" },
   { id: "acceso", label: "Puntos de control de acceso", value: 126, unit: "lectores", status: "Operativo" },
-  { id: "nvr", label: "NVR y servidores en línea", value: 34, unit: "nodos", status: "Operativo" },
-  { id: "red", label: "Nodos de red críticos", value: 219, unit: "switches/AP", status: "Monitoreado" },
-  { id: "ups", label: "Sistemas UPS en supervisión", value: 52, unit: "UPS", status: "Monitoreado" },
-  { id: "signage", label: "Pantallas de cartelería online", value: 88, unit: "pantallas", status: "Operativo" },
+  { id: "nvr", label: "NVR y servidores en linea", value: 34, unit: "nodos", status: "Operativo" },
+  { id: "red", label: "Nodos de red criticos", value: 219, unit: "switches/AP", status: "Monitoreado" },
+  { id: "ups", label: "Sistemas UPS en supervision", value: 52, unit: "UPS", status: "Monitoreado" },
+  { id: "signage", label: "Pantallas de carteleria online", value: 88, unit: "pantallas", status: "Operativo" },
 ];
 
 const events = [
-  "Evento sincronizado: Acceso biométrico + CCTV en edificio corporativo.",
-  "Chequeo de salud completado: UPS y respaldo energético en estado estable.",
+  "Evento sincronizado: acceso biometrico mas video asociado en edificio corporativo.",
+  "Chequeo de salud completado: UPS y respaldo energetico dentro de umbral estable.",
   "Alarma perimetral validada: video contextual abierto en sala de monitoreo.",
-  "Actualización de estado de red: latencia dentro de umbral operativo.",
+  "Estado de red actualizado: latencia y disponibilidad en rango operativo.",
 ];
 
 export function LiveSystemsDashboard() {
   const reduceMotion = useReducedMotion();
   const [metrics, setMetrics] = useState<SystemMetric[]>(baseMetrics);
-  const [now, setNow] = useState<string>("");
+  const [now, setNow] = useState("");
 
   useEffect(() => {
-    const updateClock = () =>
+    const updateClock = () => {
       setNow(
         new Intl.DateTimeFormat("es-CL", {
           hour: "2-digit",
@@ -44,15 +44,15 @@ export function LiveSystemsDashboard() {
           hour12: false,
         }).format(new Date()),
       );
+    };
 
     updateClock();
     const clockInterval = setInterval(updateClock, 1000);
     const metricsInterval = setInterval(() => {
       setMetrics((prev) =>
         prev.map((item, index) => {
-          const variance = ((Date.now() + index * 13) % 3) - 1;
-          const next = Math.max(1, item.value + variance);
-          return { ...item, value: next };
+          const variance = ((Date.now() + index * 17) % 3) - 1;
+          return { ...item, value: Math.max(1, item.value + variance) };
         }),
       );
     }, 3000);
@@ -63,7 +63,7 @@ export function LiveSystemsDashboard() {
     };
   }, []);
 
-  const onlineCount = useMemo(() => metrics.reduce((acc, item) => acc + item.value, 0), [metrics]);
+  const onlineCount = metrics.reduce((acc, item) => acc + item.value, 0);
 
   return (
     <section className="pb-6 md:pb-10">
@@ -82,18 +82,18 @@ export function LiveSystemsDashboard() {
                   <motion.span
                     aria-hidden
                     className="h-2.5 w-2.5 rounded-full bg-red-500"
-                    animate={reduceMotion ? undefined : { opacity: [0.4, 1, 0.4], scale: [0.9, 1.2, 0.9] }}
+                    animate={reduceMotion ? undefined : { opacity: [0.4, 1, 0.4], scale: [0.9, 1.18, 0.9] }}
                     transition={{ duration: 1.6, repeat: Infinity }}
                   />
                   EN VIVO
                 </div>
                 <p className="rounded-full border border-[color:var(--border)] px-3 py-1.5 text-xs text-[color:var(--text-secondary)]">
-                  Última actualización: {now || "--:--:--"}
+                  Ultima actualizacion: {now || "--:--:--"}
                 </p>
               </div>
             </div>
 
-            <div className="mt-6 grid gap-4 xl:grid-cols-[1.35fr_0.8fr]">
+            <div className="mt-6 grid gap-4 xl:grid-cols-[1.35fr_0.82fr]">
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {metrics.map((metric) => (
                   <article
@@ -117,7 +117,7 @@ export function LiveSystemsDashboard() {
                   Resumen live
                 </p>
                 <p className="mt-3 text-4xl font-semibold text-[color:var(--text-main)]">{onlineCount}</p>
-                <p className="text-sm text-[color:var(--text-secondary)]">elementos bajo supervisión en tiempo real</p>
+                <p className="text-sm text-[color:var(--text-secondary)]">elementos bajo supervision en tiempo real</p>
 
                 <div className="mt-6 space-y-3">
                   {events.map((event, index) => (

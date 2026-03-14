@@ -1,53 +1,150 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionIntro } from "@/components/ui/section-intro";
 
-const nodes = [
-  { label: "CCTV", x: 16, y: 24 },
-  { label: "Control de acceso", x: 35, y: 12 },
-  { label: "Alarmas", x: 66, y: 12 },
-  { label: "Red y telecom", x: 84, y: 26 },
-  { label: "Monitoreo central", x: 84, y: 74 },
-  { label: "Respaldo energético", x: 50, y: 88 },
-  { label: "Cartelería digital", x: 16, y: 74 },
+type NodeDefinition = {
+  id: string;
+  label: string;
+  xRatio: number;
+  yRatio: number;
+  width: number;
+  eventIndex: number;
+};
+
+type NodePosition = {
+  x: number;
+  y: number;
+};
+
+const nodeDefinitions: NodeDefinition[] = [
+  { id: "cctv", label: "CCTV", xRatio: 0.5, yRatio: 0.12, width: 118, eventIndex: 0 },
+  { id: "acceso", label: "Control de acceso", xRatio: 0.22, yRatio: 0.24, width: 150, eventIndex: 0 },
+  { id: "alarmas", label: "Alarmas", xRatio: 0.78, yRatio: 0.24, width: 118, eventIndex: 0 },
+  { id: "carteleria", label: "Carteleria digital", xRatio: 0.1, yRatio: 0.5, width: 150, eventIndex: 1 },
+  { id: "monitoreo", label: "Monitoreo central", xRatio: 0.9, yRatio: 0.5, width: 150, eventIndex: 1 },
+  { id: "red", label: "Red y telecom", xRatio: 0.25, yRatio: 0.82, width: 132, eventIndex: 2 },
+  { id: "energia", label: "Respaldo energetico", xRatio: 0.75, yRatio: 0.82, width: 152, eventIndex: 2 },
 ];
 
 const examples = [
-  "Alarma de intrusión abre video contextual en sala de control.",
-  "Acceso biométrico genera evidencia automática en CCTV.",
-  "Falla eléctrica activa protocolo UPS y notificaciones operativas.",
-  "Eventos de red afectan criticidad y disparan respuesta preventiva.",
+  "Simple Core cruza CCTV, control de acceso y alarmas para respuesta inmediata con evidencia asociada.",
+  "Red, monitoreo central y carteleria digital comparten telemetria y visibilidad operacional.",
+  "Respaldo energetico y servicios criticos quedan integrados bajo una sola capa de continuidad.",
 ];
 
+const diagramHeight = 620;
+const centerPoint = { x: 400, y: 310 };
+
 export function IntegrationSection() {
-  const [active, setActive] = useState(0);
   const reduceMotion = useReducedMotion();
+  const diagramRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const [ready, setReady] = useState(false);
+  const [diagramWidth, setDiagramWidth] = useState(800);
+  const [positions, setPositions] = useState<Record<string, NodePosition>>({});
+  const dragState = useRef<{ id: string; offsetX: number; offsetY: number } | null>(null);
+
+  useEffect(() => {
+    const element = diagramRef.current;
+    if (!element) return;
+
+    const syncPositions = () => {
+      const width = element.clientWidth;
+      if (!width) return;
+      setDiagramWidth(width);
+      const nextPositions: Record<string, NodePosition> = {};
+      for (const node of nodeDefinitions) {
+        nextPositions[node.id] = {
+          x: width * node.xRatio,
+          y: diagramHeight * node.yRatio,
+        };
+      }
+      setPositions((prev) => (Object.keys(prev).length === 0 ? nextPositions : prev));
+      setReady(true);
+    };
+
+    syncPositions();
+    const observer = new ResizeObserver(() => {
+      if (Object.keys(positions).length === 0) {
+        syncPositions();
+      }
+    });
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [positions]);
+
+  useEffect(() => {
+    const onPointerMove = (event: PointerEvent) => {
+      const drag = dragState.current;
+      const container = diagramRef.current;
+      if (!drag || !container) return;
+
+      const rect = container.getBoundingClientRect();
+      const definition = nodeDefinitions.find((item) => item.id === drag.id);
+      if (!definition) return;
+
+      const halfWidth = definition.width / 2;
+      const nextX = Math.min(Math.max(event.clientX - rect.left - drag.offsetX, halfWidth), rect.width - halfWidth);
+      const nextY = Math.min(Math.max(event.clientY - rect.top - drag.offsetY, 48), diagramHeight - 48);
+
+      setPositions((prev) => ({
+        ...prev,
+        [drag.id]: { x: nextX, y: nextY },
+      }));
+    };
+
+    const stopDrag = () => {
+      dragState.current = null;
+    };
+
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", stopDrag);
+
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", stopDrag);
+    };
+  }, []);
+
+  const startDrag = (event: React.PointerEvent<HTMLButtonElement>, id: string) => {
+    const container = diagramRef.current;
+    const node = positions[id];
+    if (!container || !node) return;
+
+    const rect = container.getBoundingClientRect();
+    dragState.current = {
+      id,
+      offsetX: event.clientX - rect.left - node.x,
+      offsetY: event.clientY - rect.top - node.y,
+    };
+  };
 
   return (
     <section id="integracion" className="section-spacing">
       <Container>
         <Reveal>
           <SectionIntro
-            eyebrow="Integración real"
-            title="Diseñamos ecosistemas tecnológicos conectados, no soluciones aisladas"
-            description="La arquitectura integra seguridad electrónica, red, energía y monitoreo para ejecutar automatizaciones operativas y centralizar la toma de decisiones."
+            eyebrow="Integracion real"
+            title="Simple Core unifica servicios criticos en una sola figura operacional"
+            description="Arrastra los servicios alrededor del logo central y visualiza como la integracion conecta seguridad, monitoreo, red y continuidad operativa."
           />
         </Reveal>
-        <div className="mt-10 grid gap-6 xl:grid-cols-[1.15fr_1fr]">
+        <div className="mt-10 grid gap-6 xl:grid-cols-[1.02fr_1fr]">
           <Reveal>
             <div className="rounded-3xl border border-[color:var(--border)] bg-[color:var(--surface)] p-6 md:p-8">
-              <h3 className="text-2xl font-semibold text-[color:var(--text-main)]">Centralización operativa</h3>
+              <h3 className="text-2xl font-semibold text-[color:var(--text-main)]">Hub de integracion</h3>
               <p className="mt-4 text-sm leading-relaxed text-[color:var(--text-secondary)]">
-                Unificamos eventos, alarmas y evidencia para que operaciones, seguridad y TI actúen con contexto
-                inmediato.
+                Cada servicio vive como un nodo independiente, pero el valor real aparece cuando Simple Core los conecta en una sola capa operativa.
               </p>
-              <ul className="mt-6 space-y-4">
+              <div className="mt-6 space-y-4">
                 {examples.map((example, index) => (
-                  <li
+                  <div
                     key={example}
                     className={`rounded-xl border px-4 py-3 text-sm transition-colors ${
                       active === index
@@ -56,71 +153,141 @@ export function IntegrationSection() {
                     }`}
                   >
                     {example}
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="relative min-h-[520px] rounded-3xl border border-[color:var(--border)] bg-[linear-gradient(165deg,rgba(19,29,43,0.8)_0%,rgba(16,23,34,0.92)_100%)] p-4">
+            <div
+              ref={diagramRef}
+              className="relative min-h-[620px] overflow-hidden rounded-3xl border border-[color:var(--border)] bg-[linear-gradient(165deg,rgba(19,29,43,0.9)_0%,rgba(16,23,34,0.98)_100%)] p-4 md:p-6"
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.14),transparent_55%)]" aria-hidden />
+
               <div className="absolute inset-0 hidden md:block" aria-hidden>
-                <svg viewBox="0 0 100 100" className="h-full w-full">
-                  {nodes.map((node, index) => (
-                    <line
-                      key={`line-${node.label}`}
-                      x1="50"
-                      y1="50"
-                      x2={node.x}
-                      y2={node.y}
-                      stroke={active === index ? "rgba(34, 211, 238, 0.8)" : "rgba(167,180,198,0.3)"}
-                      strokeWidth="0.55"
-                      className="integration-line"
-                    />
-                  ))}
+                <svg viewBox={`0 0 800 ${diagramHeight}`} className="h-full w-full">
+                  {nodeDefinitions.map((node) => {
+                    const position = positions[node.id];
+                    if (!position) return null;
+
+                    const scaledX = (position.x / Math.max(diagramWidth, 1)) * 800;
+                    const scaledY = position.y;
+                    const isActive = active === node.eventIndex;
+
+                    return (
+                      <g key={node.id}>
+                        <line
+                          x1={centerPoint.x}
+                          y1={centerPoint.y}
+                          x2={scaledX}
+                          y2={scaledY}
+                          stroke="rgba(167,180,198,0.18)"
+                          strokeWidth="1.2"
+                        />
+                        <line
+                          x1={centerPoint.x}
+                          y1={centerPoint.y}
+                          x2={scaledX}
+                          y2={scaledY}
+                          stroke={isActive ? "rgba(34,211,238,0.92)" : "rgba(34,211,238,0.52)"}
+                          strokeWidth="1.2"
+                          className="integration-line"
+                        />
+                        {!reduceMotion ? (
+                          <motion.circle
+                            cx={centerPoint.x}
+                            cy={centerPoint.y}
+                            r="4"
+                            fill="rgba(34,211,238,0.92)"
+                            animate={{
+                              cx: [centerPoint.x, scaledX],
+                              cy: [centerPoint.y, scaledY],
+                              opacity: [0, 1, 0],
+                            }}
+                            transition={{
+                              duration: 1.8,
+                              repeat: Infinity,
+                              repeatDelay: 0.25,
+                              ease: "linear",
+                              delay: node.eventIndex * 0.12,
+                            }}
+                          />
+                        ) : null}
+                      </g>
+                    );
+                  })}
                 </svg>
               </div>
 
-              <div className="relative hidden h-full md:block">
-                <motion.button
-                  whileHover={reduceMotion ? undefined : { scale: 1.03 }}
-                  type="button"
-                  className="absolute left-1/2 top-1/2 w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-[color:rgba(34,211,238,0.42)] bg-[color:rgba(13,23,38,0.88)] px-5 py-4 text-center text-sm font-semibold text-[color:var(--text-main)] shadow-[0_18px_42px_-20px_rgba(34,211,238,0.5)]"
+              <div className="absolute left-1/2 top-1/2 z-10 hidden w-[220px] -translate-x-1/2 -translate-y-1/2 md:block">
+                <motion.div
+                  animate={reduceMotion ? undefined : { y: [0, -3, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="rounded-[2rem] border border-[color:rgba(34,211,238,0.38)] bg-[linear-gradient(180deg,rgba(12,21,34,0.96)_0%,rgba(10,17,28,0.94)_100%)] px-6 py-6 text-center shadow-[0_22px_54px_-26px_rgba(34,211,238,0.55)]"
                 >
-                  Plataforma de integración Simple Core
-                </motion.button>
+                  <Image
+                    src="/simple-core-logo.svg"
+                    alt="Simple Core"
+                    width={190}
+                    height={60}
+                    className="mx-auto h-auto w-[148px]"
+                  />
+                  <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-[color:var(--accent-glow)]">Hub de integracion</p>
+                </motion.div>
+              </div>
 
-                {nodes.map((node, index) => (
-                  <motion.button
-                    key={node.label}
-                    type="button"
-                    onMouseEnter={() => setActive(index)}
-                    onFocus={() => setActive(index)}
-                    whileHover={reduceMotion ? undefined : { y: -2, scale: 1.02 }}
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-xl border px-3 py-2 text-xs font-medium transition ${
-                      active === index
-                        ? "border-[color:rgba(34,211,238,0.6)] bg-[color:rgba(34,211,238,0.12)] text-[color:var(--text-main)]"
-                        : "border-[color:var(--border)] bg-[color:rgba(16,23,34,0.86)] text-[color:var(--text-secondary)]"
-                    }`}
-                    style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                  >
-                    {node.label}
-                  </motion.button>
-                ))}
+              <div className="relative hidden h-full md:block">
+                {ready &&
+                  nodeDefinitions.map((node) => {
+                    const position = positions[node.id];
+                    if (!position) return null;
+
+                    const isActive = active === node.eventIndex;
+
+                    return (
+                      <motion.button
+                        key={node.id}
+                        type="button"
+                        onMouseEnter={() => setActive(node.eventIndex)}
+                        onFocus={() => setActive(node.eventIndex)}
+                        onPointerDown={(event) => startDrag(event, node.id)}
+                        whileHover={reduceMotion ? undefined : { scale: 1.02 }}
+                        className={`absolute z-20 -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-xl border px-3 py-2 text-center text-[11px] font-medium leading-tight transition active:cursor-grabbing ${
+                          isActive
+                            ? "border-[color:rgba(34,211,238,0.6)] bg-[color:rgba(34,211,238,0.14)] text-[color:var(--text-main)]"
+                            : "border-[color:var(--border)] bg-[color:rgba(16,23,34,0.92)] text-[color:var(--text-secondary)]"
+                        }`}
+                        style={{ left: `${position.x}px`, top: `${position.y}px`, width: `${node.width}px` }}
+                      >
+                        {node.label}
+                      </motion.button>
+                    );
+                  })}
               </div>
 
               <div className="grid gap-3 md:hidden">
-                <div className="rounded-xl border border-[color:rgba(34,211,238,0.45)] bg-[color:rgba(16,23,34,0.78)] px-4 py-3 text-sm text-[color:var(--text-main)]">
-                  Plataforma de integración Simple Core
+                <div className="rounded-2xl border border-[color:rgba(34,211,238,0.42)] bg-[color:rgba(11,19,31,0.88)] px-4 py-5 text-center">
+                  <Image
+                    src="/simple-core-logo.svg"
+                    alt="Simple Core"
+                    width={190}
+                    height={60}
+                    className="mx-auto h-auto w-[148px]"
+                  />
+                  <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-[color:var(--accent-glow)]">Hub de integracion</p>
                 </div>
-                {nodes.map((node) => (
-                  <div
-                    key={node.label}
-                    className="rounded-xl border border-[color:var(--border)] bg-[color:rgba(16,23,34,0.9)] px-4 py-3 text-sm text-[color:var(--text-secondary)]"
-                  >
-                    {node.label}
-                  </div>
-                ))}
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {nodeDefinitions.map((node) => (
+                    <div
+                      key={node.id}
+                      className="rounded-xl border border-[color:var(--border)] bg-[color:rgba(16,23,34,0.92)] px-4 py-3 text-sm text-[color:var(--text-secondary)]"
+                    >
+                      {node.label}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </Reveal>
