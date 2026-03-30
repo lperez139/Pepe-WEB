@@ -37,7 +37,7 @@ export function Navbar() {
           <Brand
             className="shrink-0 text-[color:var(--text-main)]"
             logoClassName="h-8 w-auto md:h-9"
-            nameClassName="text-xs font-semibold tracking-[0.14em] text-[color:var(--text-main)] md:text-sm"
+            showName={false}
           />
           <div className="hidden items-center gap-3 xl:flex">
             <ButtonLink href="#contacto">Solicitar cotizacion</ButtonLink>

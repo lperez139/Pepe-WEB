@@ -1,10 +1,8 @@
 import Image from "next/image";
 import portadaImage from "@/assets/portada.jpg";
-import { HeroLogo } from "@/components/site/hero-logo";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
-import { trustPillars } from "@/lib/site-content";
 
 export function Hero() {
   return (
@@ -24,11 +22,8 @@ export function Hero() {
       <div className="absolute inset-x-0 bottom-0 -z-10 h-52 bg-[linear-gradient(180deg,rgba(10,15,20,0)_0%,rgba(10,15,20,0.95)_100%)]" />
 
       <Container className="relative z-10">
-        <div className="grid gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(300px,0.7fr)] xl:items-end">
+        <div>
           <div className="max-w-4xl">
-            <Reveal className="mb-8">
-              <HeroLogo />
-            </Reveal>
             <Reveal>
               <p className="mb-6 inline-flex rounded-full border border-[color:rgba(34,211,238,0.18)] bg-[color:rgba(7,13,20,0.55)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent-glow)] backdrop-blur-sm">
                 Integrador tecnológico B2B
@@ -54,21 +49,6 @@ export function Hero() {
               </div>
             </Reveal>
           </div>
-
-          <Reveal delay={0.2} className="xl:justify-self-end">
-            <div className="rounded-[2rem] border border-[color:rgba(255,255,255,0.08)] bg-[linear-gradient(180deg,rgba(10,15,20,0.52)_0%,rgba(10,15,20,0.78)_100%)] p-5 backdrop-blur-sm">
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                {trustPillars.map((pillar) => (
-                  <div
-                    key={pillar}
-                    className="rounded-2xl border border-[color:rgba(255,255,255,0.08)] bg-[color:rgba(16,23,34,0.54)] px-4 py-3 text-sm text-[color:var(--text-main)]"
-                  >
-                    {pillar}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Reveal>
         </div>
       </Container>
     </section>
