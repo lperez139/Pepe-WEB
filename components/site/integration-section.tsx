@@ -25,16 +25,16 @@ const nodeDefinitions: NodeDefinition[] = [
   { id: "cctv", label: "CCTV", xRatio: 0.5, yRatio: 0.12, width: 118, eventIndex: 0 },
   { id: "acceso", label: "Control de acceso", xRatio: 0.22, yRatio: 0.24, width: 150, eventIndex: 0 },
   { id: "alarmas", label: "Alarmas", xRatio: 0.78, yRatio: 0.24, width: 118, eventIndex: 0 },
-  { id: "carteleria", label: "Carteleria digital", xRatio: 0.1, yRatio: 0.5, width: 150, eventIndex: 1 },
-  { id: "monitoreo", label: "Monitoreo central", xRatio: 0.9, yRatio: 0.5, width: 150, eventIndex: 1 },
-  { id: "red", label: "Red y telecom", xRatio: 0.25, yRatio: 0.82, width: 132, eventIndex: 2 },
-  { id: "energia", label: "Respaldo energetico", xRatio: 0.75, yRatio: 0.82, width: 152, eventIndex: 2 },
+  { id: "red", label: "Red y telecom", xRatio: 0.16, yRatio: 0.56, width: 132, eventIndex: 1 },
+  { id: "salas", label: "Salas de control", xRatio: 0.84, yRatio: 0.56, width: 148, eventIndex: 1 },
+  { id: "consultoria", label: "Consultoria", xRatio: 0.25, yRatio: 0.82, width: 132, eventIndex: 2 },
+  { id: "soporte", label: "Soporte TI", xRatio: 0.75, yRatio: 0.82, width: 132, eventIndex: 2 },
 ];
 
 const examples = [
-  "Simple Core cruza CCTV, control de acceso y alarmas para respuesta inmediata con evidencia asociada.",
-  "Red, monitoreo central y carteleria digital comparten telemetria y visibilidad operacional.",
-  "Respaldo energetico y servicios criticos quedan integrados bajo una sola capa de continuidad.",
+  "CCTV, control de acceso y alarmas comparten eventos para responder con evidencia y trazabilidad.",
+  "La red y las salas de control sostienen una operacion estable para entornos corporativos e industriales.",
+  "Consultoria y soporte permiten crecer por etapas sin perder control tecnico del proyecto.",
 ];
 
 const diagramHeight = 620;
@@ -131,16 +131,16 @@ export function IntegrationSection() {
         <Reveal>
           <SectionIntro
             eyebrow="Integracion real"
-            title="Simple Core unifica servicios criticos en una sola figura operacional"
-            description="Arrastra los servicios alrededor del logo central y visualiza como la integracion conecta seguridad, monitoreo, red y continuidad operativa."
+            title="Servicios conectados para una operacion tecnica coherente"
+            description="Arrastra los servicios alrededor del logo central y visualiza como la integracion conecta seguridad, redes, control operativo y soporte."
           />
         </Reveal>
         <div className="mt-10 grid gap-6 xl:grid-cols-[1.02fr_1fr]">
           <Reveal>
             <div className="rounded-3xl border border-[color:var(--border)] bg-[color:var(--surface)] p-6 md:p-8">
-              <h3 className="text-2xl font-semibold text-[color:var(--text-main)]">Hub de integracion</h3>
+              <h3 className="text-2xl font-semibold text-[color:var(--text-main)]">Integracion aplicada</h3>
               <p className="mt-4 text-sm leading-relaxed text-[color:var(--text-secondary)]">
-                Cada servicio vive como un nodo independiente, pero el valor real aparece cuando Simple Core los conecta en una sola capa operativa.
+                Cada servicio aporta valor por si solo, pero el resultado mejora cuando se disena como parte de una misma estrategia operacional.
               </p>
               <div className="mt-6 space-y-4">
                 {examples.map((example, index) => (
@@ -234,7 +234,7 @@ export function IntegrationSection() {
                     height={60}
                     className="mx-auto h-auto w-[148px]"
                   />
-                  <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-[color:var(--accent-glow)]">Hub de integracion</p>
+                  <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-[color:var(--accent-glow)]">Operacion conectada</p>
                 </motion.div>
               </div>
 
@@ -276,7 +276,7 @@ export function IntegrationSection() {
                     height={60}
                     className="mx-auto h-auto w-[148px]"
                   />
-                  <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-[color:var(--accent-glow)]">Hub de integracion</p>
+                  <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-[color:var(--accent-glow)]">Operacion conectada</p>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {nodeDefinitions.map((node) => (

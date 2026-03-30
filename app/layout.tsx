@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s | Simple Core",
   },
   description:
-    "Integrador B2B especializado en cctv para empresas, videovigilancia IP, control de acceso biométrico, redes, cartelería digital, salas de control, UPS online y soporte de infraestructura tecnológica.",
+    "Integrador B2B especializado en cctv para empresas, videovigilancia IP, control de acceso biométrico, redes, salas de control y soporte de infraestructura tecnológica.",
   keywords: [
     "cctv para empresas",
     "videovigilancia ip",
@@ -29,9 +29,7 @@ export const metadata: Metadata = {
     "integración de sistemas de seguridad",
     "cableado estructurado",
     "fibra óptica",
-    "digital signage",
     "salas de control",
-    "ups online",
     "monitoreo tecnológico",
     "soporte de infraestructura tecnológica",
   ],
@@ -45,7 +43,7 @@ export const metadata: Metadata = {
     siteName: "Simple Core",
     title: "Integración tecnológica y seguridad electrónica para empresas",
     description:
-      "Diseño, implementación e integración de CCTV, control de acceso, redes, digital signage y monitoreo centralizado para infraestructura crítica.",
+      "Diseño, implementación e integración de CCTV, control de acceso, redes y soporte operativo para infraestructura crítica.",
   },
   twitter: {
     card: "summary_large_image",

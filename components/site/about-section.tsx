@@ -16,8 +16,8 @@ export function AboutSection() {
             />
             <p className="mt-6 text-sm leading-relaxed text-[color:var(--text-secondary)]">
               Nuestra propuesta combina experiencia en cctv para empresas, videovigilancia IP, control de acceso
-              biométrico, cableado estructurado, fibra óptica, digital signage, salas de control, UPS online y
-              soporte de infraestructura tecnológica.
+              biométrico, cableado estructurado, fibra óptica, salas de control y soporte de infraestructura
+              tecnológica.
             </p>
             <div className="mt-7">
               <ButtonLink href="#contacto">Solicitar evaluación técnica</ButtonLink>

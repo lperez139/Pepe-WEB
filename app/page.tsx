@@ -1,18 +1,18 @@
 ﻿import { AboutSection } from "@/components/site/about-section";
+import { ClientsSection } from "@/components/site/clients-section";
+import { ChatbotWidget } from "@/components/site/chatbot-widget";
 import { ContactSection } from "@/components/site/contact-section";
 import { DifferentiatorsSection } from "@/components/site/differentiators-section";
-import { FaqSection } from "@/components/site/faq-section";
 import { Footer } from "@/components/site/footer";
 import { GlobalBackgroundFollower } from "@/components/site/global-background-follower";
 import { Hero } from "@/components/site/hero";
 import { IndustriesSection } from "@/components/site/industries-section";
 import { IntegrationSection } from "@/components/site/integration-section";
-import { LiveSystemsDashboard } from "@/components/site/live-systems-dashboard";
 import { Navbar } from "@/components/site/navbar";
 import { ProcessSection } from "@/components/site/process-section";
 import { ServicesSection } from "@/components/site/services-section";
 import { ValueProposition } from "@/components/site/value-proposition";
-import { company, faqs, services } from "@/lib/site-content";
+import { company, services } from "@/lib/site-content";
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -75,19 +75,6 @@ const localBusinessSchema = {
   priceRange: "$$",
 };
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer,
-    },
-  })),
-};
-
 export default function Home() {
   return (
     <>
@@ -101,20 +88,20 @@ export default function Home() {
       <GlobalBackgroundFollower />
       <main id="contenido" className="relative z-10">
         <Hero />
-        <LiveSystemsDashboard />
         <ValueProposition />
         <ServicesSection />
         <IndustriesSection />
         <IntegrationSection />
+        <ClientsSection />
         <ProcessSection />
         <DifferentiatorsSection />
         <AboutSection />
-        <FaqSection />
         <ContactSection />
       </main>
       <div className="relative z-10">
         <Footer />
       </div>
+      <ChatbotWidget />
 
       <script
         type="application/ld+json"
@@ -132,12 +119,6 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(localBusinessSchema),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqSchema),
         }}
       />
     </>

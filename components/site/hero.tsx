@@ -4,7 +4,7 @@ import { HeroLogo } from "@/components/site/hero-logo";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
-import { compatiblePlatforms, trustPillars } from "@/lib/site-content";
+import { trustPillars } from "@/lib/site-content";
 
 export function Hero() {
   return (
@@ -41,8 +41,8 @@ export function Hero() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-7 max-w-3xl text-pretty text-base leading-relaxed text-[color:rgba(243,247,251,0.78)] md:text-xl">
-                Diseñamos, implementamos y mantenemos soluciones de CCTV, control de acceso, redes, cartelería digital
-                y monitoreo centralizado para entornos corporativos, industriales e institucionales.
+                Diseñamos, implementamos y mantenemos soluciones de CCTV, control de acceso, redes y soporte tecnico
+                para entornos corporativos, industriales e institucionales.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
@@ -70,24 +70,6 @@ export function Hero() {
             </div>
           </Reveal>
         </div>
-
-        <Reveal delay={0.25} className="mt-12 md:mt-16">
-          <div className="rounded-3xl border border-[color:rgba(255,255,255,0.08)] bg-[color:rgba(10,15,20,0.52)] p-5 backdrop-blur-md">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:rgba(243,247,251,0.66)]">
-              Plataformas compatibles
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {compatiblePlatforms.map((platform) => (
-                <span
-                  key={platform}
-                  className="rounded-full border border-[color:rgba(255,255,255,0.08)] bg-[color:rgba(255,255,255,0.03)] px-3 py-1.5 text-xs text-[color:var(--text-secondary)]"
-                >
-                  {platform}
-                </span>
-              ))}
-            </div>
-          </div>
-        </Reveal>
       </Container>
     </section>
   );

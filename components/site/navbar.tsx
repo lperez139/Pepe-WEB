@@ -40,9 +40,6 @@ export function Navbar() {
             nameClassName="text-xs font-semibold tracking-[0.14em] text-[color:var(--text-main)] md:text-sm"
           />
           <div className="hidden items-center gap-3 xl:flex">
-            <ButtonLink href="#contacto" variant="secondary">
-              Agendar visita tecnica
-            </ButtonLink>
             <ButtonLink href="#contacto">Solicitar cotizacion</ButtonLink>
           </div>
           <ButtonLink href="#contacto" className="xl:hidden">
@@ -65,18 +62,6 @@ export function Navbar() {
                 </a>
               </li>
             ))}
-            <li className="xl:hidden">
-              <a
-                className="text-[color:var(--accent-glow)] transition-colors hover:text-[color:var(--text-main)]"
-                href="#contacto"
-                onClick={(event) => {
-                  event.preventDefault();
-                  scrollToSection("#contacto");
-                }}
-              >
-                Agendar visita tecnica
-              </a>
-            </li>
           </ul>
         </nav>
       </Container>

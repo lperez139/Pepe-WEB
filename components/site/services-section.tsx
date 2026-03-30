@@ -60,7 +60,7 @@ export function ServicesSection() {
             <SectionIntro
               eyebrow="Servicios"
               title="Capacidades integrales para seguridad electrónica e infraestructura tecnológica"
-              description="Integramos videovigilancia IP, control de acceso biométrico, redes, digital signage, energía y monitoreo bajo una arquitectura única, escalable y auditable."
+              description="Integramos videovigilancia IP, control de acceso biometrico, redes, consultoria y soporte bajo una arquitectura escalable y auditable."
             />
           </Reveal>
 

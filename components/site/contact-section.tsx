@@ -7,9 +7,7 @@ const projectTypes = [
   "CCTV para empresas",
   "Control de acceso biométrico",
   "Redes y cableado estructurado",
-  "Cartelería digital",
   "Sala de control y monitoreo",
-  "UPS online y respaldo",
   "Integración multiplataforma",
   "Soporte de infraestructura tecnológica",
 ];
@@ -100,8 +98,7 @@ export function ContactSection() {
                   Compromiso de respuesta
                 </p>
                 <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
-                  Respuesta inicial en menos de 24 horas hábiles para evaluaciones, visitas técnicas y solicitudes de
-                  cotización.
+                  Respuesta inicial en menos de 24 horas habiles para evaluaciones y solicitudes de cotizacion.
                 </p>
               </div>
             </aside>

@@ -6,9 +6,9 @@ import { company, navLinks } from "@/lib/site-content";
 const featuredServices = [
   "Videovigilancia IP",
   "Control de acceso biométrico",
-  "Integración de sistemas de seguridad",
   "Cableado estructurado y fibra óptica",
   "Salas de control",
+  "Consultoría tecnológica",
   "Soporte de infraestructura tecnológica",
 ];
 
@@ -24,8 +24,8 @@ export function Footer() {
               nameClassName="text-sm font-semibold tracking-[0.16em] text-[color:var(--text-main)]"
             />
             <p className="mt-4 text-sm leading-relaxed text-[color:var(--text-secondary)]">
-              Integrador B2B especializado en cctv para empresas, control de acceso, redes, digital signage y
-              monitoreo tecnológico para continuidad operacional.
+              Integrador B2B especializado en cctv para empresas, control de acceso, redes y soporte tecnológico para
+              continuidad operacional.
             </p>
           </div>
 
