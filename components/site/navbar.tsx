@@ -5,17 +5,10 @@ import { navLinks } from "@/lib/site-content";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Brand } from "@/components/ui/brand";
+import { scrollToHash } from "@/lib/scroll-to-hash";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-
-  const scrollToSection = (href: string) => {
-    const id = href.replace("#", "");
-    const target = document.getElementById(id);
-    if (!target) return;
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", href);
-  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -55,7 +48,7 @@ export function Navbar() {
                   href={item.href}
                   onClick={(event) => {
                     event.preventDefault();
-                    scrollToSection(item.href);
+                    scrollToHash(item.href);
                   }}
                 >
                   {item.label}
